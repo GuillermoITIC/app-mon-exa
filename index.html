@@ -1,39 +1,247 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Monitoreo de órdenes</title>
+    <!-- Agregamos la referencia al archivo CSS de Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilos personalizados */
+        
+        body {
+            padding-top: 100px;
+            /* Ajuste para el navbar */
+            padding-bottom: 100px;
+            /* Ajuste para el footer */
+            background-color: #f8f9fa;
+            /* Color de fondo */
+        }
+
+        .container {
+            max-width: 1000px;
+            /* Ancho máximo del contenido */
+            margin: auto;
+            /* Centrar el contenido */
+        }
+
+        .mb-4 {
+            margin-bottom: 1.5rem;
+            /* Espacio entre las columnas */
+        }
+
+        .footer {
+            background-color: #343a40;
+            /* Color de fondo del footer */
+            color: #ffffff;
+            /* Color del texto del footer */
+            padding: 10px 0;
+            /* Espaciado interno del footer */
+        }
+
+        .footer span {
+            font-size: 0.9rem;
+            /* Tamaño de fuente del texto del footer */
+        }
+
+        .image-container {
+            width: 100px;
+            /* Ancho deseado */
+            height: 100px;
+            /* Altura deseada */
+            overflow: hidden;
+            /* Evita que la imagen se salga del contenedor */
+            margin: 0 auto;
+            /* Centra horizontalmente */
+        }
+
+
+        .image-container2 {
+           width: 100%;
+           max-width: 800px; /* Ajusta el ancho máximo según tus necesidades */
+           margin: 0 auto; /* Centra horizontalmente */
+           overflow: hidden; /* Evita que la imagen se desborde del contenedor */
+
+           max-width: none; /* Elimina el ancho máximo para que el plano se ajuste al ancho de la pantalla */
+           margin: 0; /* Elimina el margen para ocupar todo el ancho disponible */
+        }
+
+        .image-container img {
+          width: 100%; /* La imagen ocupa todo el ancho del contenedor */
+          height: auto; /* Se ajusta automáticamente la altura para mantener la proporción original */
+         display: block; /* Elimina el espacio adicional debajo de la imagen */
+       }
+
+        .device-image {
+            width: 100%;
+            /* Ocupa todo el ancho disponible */
+            height: auto;
+            /* Se ajusta automáticamente a la proporción original */
+            display: block;
+            /* Evita el espacio adicional debajo de la imagen */
+        }
+        .position-relative {
+            position: relative;
+        }
+
+        .position-absolute {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+
+            top: valor; /* Ajusta la posición vertical */
+            left: valor; /* Ajusta la posición horizontal */
+
+        /* Mueve la imagen 50px hacia abajo */
+        /* Mueve la imagen 100px hacia la derecha */
+        }
+
+        .foco {
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
-    <div>
-        <h3>Recámara</h3>
-        <Img src="img/Enciende la luz de la habitación.jpg" class="foco" id="focoRoom"></Img>
-        <h3>Sala</h3>
-        <Img src="img/Apaga la luz de la sala.jpg" class="foco" id="focoSala"></Img>
-        <h3>Jardín</h3>
-        <Img src="img/Apaga las luces del jardín.jpg" class="foco focoJardin" id="focoSala"></Img>
-        <Img src="img/Apaga las luces del jardín.jpg" class="foco focoJardin" id=""></Img>
-        <Img src="img/Apaga las luces del jardín.jpg" class="foco focoJardin" id=""></Img>
-        <Img src="img/Apaga las luces del jardín.jpg" class="foco focoJardin" id=""></Img>
-        <Img src="img/Apaga las luces del jardín.jpg" class="foco focoJardin" id=""></Img>
-        <h3>Ventilador</h3>
-        <Img src="img/Apaga el ventilador .jpg" width="250px" id="ventiladorImg"></Img>
-        <h3>Cortínas</h3>
-        <Img src="img/Cierra las cortinas.jpg" width="250px" id="cortinasImg"></Img>
-        <h3>Alarma</h3>
-        <Img src="img/Desactiva la alarma de la casa .jpg" width="250px" id="alarmaImg"></Img>
-        <audio src="sounds/alarm-sound-effect.mp3" id="alarma-sonido"></audio>
-        <h3>Cámaras</h3>
-        <Img src="img/Apaga las cámaras de seguridad.jpg" width="250px" id="camaraImg"></Img>
-        <audio src="sounds/sonido-camara.mp3" id="camara-sonido"></audio>
+    <!-- Encabezado -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">HP</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="container mt-5">
+        <h2 class="text-center">Órdenes</h2>
+        <div class="border border-md p-3 text-center">
+            <p><strong>Última orden solicitada:</strong></p>
+            <p id="lastOrderText"></p>
+        </div>
+
+    <!-- Plano -->
+        <div class="container mt-5">
+            <h2 class="text-center">Plano de la casa</h2>
+            <div class="border border-md p-3 text-center">
+        <!-- Contenedor del plano -->
+            <div class="image-container2 position-relative">
+            <img src="img/casaxd.jpg" class="img-fluid" alt="Plano de la casa">
+        <!-- Imágenes superpuestas -->
+            <img id="luzRecamara" src="img/Apaga la luz de la habitación.jpg" class="position-absolute" style="top: 240px; left: 290px;">
+
+            <img id="luzSala" src="img/Apaga la luz de la sala.jpg" class="position-absolute" style="top: 530px; left: 290px;">
+
+            <img class="luzJardin position-absolute" src="img/Apaga las luces del jardín.jpg" style="top: 100px; left: 290px;">
+
+            <!--
+            <img id="luzJardin" src="img/off.jpg" class="position-absolute" style="top: 100px; left: 239px;">
+            <img id="luzJardin" src="img/off.jpg" class="position-absolute" style="top: 100px; left: 400px;">
+            <img id="luzJardin" src="img/off.jpg" class="position-absolute" style="top: 210px; left: 530px;">
+            <img id="luzJardin" src="img/off.jpg" class="position-absolute" style="top: 300px; left: 530px;">
+            <img id="luzJardin" src="img/off.jpg" class="position-absolute" style="top: 640px; left: 320px;">
+            -->
+
+            <img id="ventilador" src="img/Apaga el ventilador .jpg" class="position-absolute" style="top: 530px; left: 390px;">
+
+            <img class="cortinas position-absolute" src="img/Cierra las cortinas.jpg" style="top: 270px; left: 250px;">
+            
+            <!--
+            <img id="cortinas" src="img/cortinasoff.png" class="position-absolute" style="top: 270px; left: 200px;">
+            <img id="cortinas" src="img/cortinasoff.png" class="position-absolute" style="top: 270px; left: 450px;">
+            <img id="cortinas" src="img/cortinasoff.png" class="position-absolute" style="top: 400px; left: 205px;">
+            -->
+
+            <img id="alarma" src="img/Desactiva la alarma de la casa .jpg" class="position-absolute" style="top: 640px; left: 590px;">
+            <audio id="alarmas" src="sonido.alarma.mp3"></audio>
+
+            <img class="camaras position-absolute" src="img/Apaga las cámaras de seguridad.jpg" style="top: 600px; left: 370px;">
+            
+            <!--
+            <img id="camaras" src="img/camera_off.png" class="position-absolute" style="top: 600px; left: 320px;">
+            <img id="camaras" src="img/camera_off.png" class="position-absolute" style="top: 400px; left: 500px;">
+            <img id="camaras" src="img/camera_off.png" class="position-absolute" style="top: 140px; left: 320px;">
+            -->
+                </div>
+            </div>
+        </div>        
+
+        
+        <!-- Representación visual de las órdenes 
+        <div class="row mt-3">
+
+            <div class="col-6 col-md-4 mb-4">
+                <h6 class="text-center">Luz de la recámara</h6>
+                <div class="image-container">
+                    <img id="luzRecamara" src="img/off.jpg" class="foco">
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 mb-4">
+                <h6 class="text-center">Luz de la sala</h6>
+                <div class="image-container">
+                <img id="luzSala" src="img/off.jpg" class="foco">
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 mb-4">
+                <h6 class="text-center">Luces del jardín</h6>
+                <div class="image-container">
+                <img id="luzJardin" src="img/off.jpg" class="foco">
+            </div>
+            </div>
+
+            <div class="col-6 col-md-4 mb-4">
+                <h6 class="text-center">Ventilador</h6>
+                <div class="image-container">
+                <img id="ventilador" src="img/ventoff.png" class="foco">
+            </div>
+            </div>
+
+            <div class="col-6 col-md-4 mb-4">
+                <h6 class="text-center">Cortinas</h6>
+                <div class="image-container">
+                <img id="cortinas" src="img/cortinasoff.png" class="foco">
+            </div>
+            </div>
+            <div class="col-6 col-md-4 mb-4">
+                <h6 class="text-center">Alarma de la casa</h6>
+                <div class="image-container">
+                <img id="alarma" src="img/alarmaoff.png" class="foco">
+                <audio id="alarmas" src="alarma-puerta.mp3"></audio>
+            </div>
+            </div>
+            <div class="col-6 col-md-4 mb-4">
+                <h6 class="text-center">Cámaras de seguridad</h6>
+                <div class="image-container">
+                <img id="camaras" src="img/camera_off.png" class="foco">
+                </div>
+            </div>
+        </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    -->
 
+    <!-- Pie de página -->
+    <footer class="footer fixed-bottom">
+        <div class="container text-center">
+            <span>Mi Aplicación Guillermo Martinez © 2024 </span>
+        </div>
+    </footer>
 
-    <script src="app.js"></script>
+    <!-- Agregamos la referencia al archivo JS de Bootstrap y a jQuery para el funcionamiento de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Agregamos la referencia al archivo JavaScript personalizado -->
+    <script type="module" src="main.js"></script>
 </body>
 
 </html>
